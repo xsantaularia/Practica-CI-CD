@@ -22,7 +22,7 @@ public class CompteBancariTest {
     @Test
     void ingressarCorrecteTest() {
         compte.ingressar(500.0);
-        assertEquals(1500.0, compte.getSaldo(), MARGE_ERROR);
+        assertEquals(9999.0, compte.getSaldo(), MARGE_ERROR);
     }
 
     @Test
