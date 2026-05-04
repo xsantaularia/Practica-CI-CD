@@ -1,0 +1,31 @@
+name: Java CI with Ant
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Compile and Test
+      run: |
+        mkdir -p out/test
+        javac -d out/test -cp src src/CompteBancari.java
+        # Baixem la llibreria de JUnit
+        wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
+        # Compilem els tests
+        javac -d out/test -cp out/test:junit-platform-console-standalone-1.9.3.jar test/CompteBancariTest.java
+        # Executem els tests
+        java -jar junit-platform-console-standalone-1.9.3.jar --class-path out/test --scan-class-path
